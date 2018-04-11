@@ -23,7 +23,8 @@ if(loggedin() || $auth->isLoggedIn()){
 		<link href="stylesheets/final5.css" rel="stylesheet">
 		<link rel="icon" href="images/favicon(1).ico" type=image/x-icon>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-
+	  <script src="js/phaser.min.js"></script>
+    <script src="js/game.js"></script>  
 	</head>
 	<body>
 		<section id="wrapper">
@@ -37,7 +38,7 @@ if(loggedin() || $auth->isLoggedIn()){
 				<h2>Game</h2>
 				<section>
           <h3>Welcome to CoolName Game.</h3>
-          <div id="game_div" width="500px" height="500px"></div>
+          <div id="game" class='game' width="500px" height="500px"></div>
 
         </section>
 			</main>
