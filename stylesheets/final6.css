@@ -146,12 +146,13 @@ footer {
 .footerNav {
 	text-decoration: none;
 	font-size: 18pt;
+	padding: 15px;
+	padding-left: 45px;
 }
 
 #footerNavText {
 	font-size: 18pt;
 	color: #26E71C;
-	margin-left: 40px;
 	text-decoration: underline;
 }
 
@@ -175,6 +176,14 @@ footer {
 	color: #2D65D6;
 }
 
+.copyright {
+	padding: 0px 5px 5px 5px;
+	border: 1px solid #2D65D6;
+	display: block;
+	background-color: #292916;
+	color: #26E71C;
+}
+
 h1 {
 	background-repeat: no-repeat;	
 	background-color: #285626;
@@ -193,9 +202,6 @@ p {
 	font-size: 18pt;
 	margin-bottom: 0px;
 	padding-bottom: 10px;
-}
-
-#game_container {
 }
 
 #game {
@@ -299,7 +305,7 @@ p {
 	footer {
 		margin-left: 0;
 		margin-right: 0;
-    width: 100%;
+    width: 90%;
     box-shadow: none;
     border-top: 3px solid blue;
 	}
@@ -395,10 +401,14 @@ p {
 	footer {
 		margin-left: 0px;
 		margin-right: 5px;
-		padding-right: 10%;
     width: 100%;
     box-shadow: none;
     border-top: 3px solid blue;
+	}
+
+	.copyright {
+		padding: 5px 5px 5px 5px;
+		width: 100%;
 	}
 	
 	header {
