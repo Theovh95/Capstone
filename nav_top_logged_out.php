@@ -4,7 +4,7 @@ echo '
           <a href = "index.php">Home</a>
 					<a href = "login.php">Log&nbsp;In</a>
 					<a href = "create_account.php">Create&nbsp;Account</a>
-					<a href = "about.php">About</a>
+					<a id="final_a" href = "about.php">About</a>
 				</section>
       ';  
 ?>

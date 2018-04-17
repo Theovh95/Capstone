@@ -6,7 +6,7 @@
 		<meta name="desription" content="mattsarg, a website that aims to give pointers about
 			how to use HTML5 to develope web pages.">
 		<title>mattsarg Website Developer Webpage Creation Resource</title>
-		<link href="stylesheets/final5.css" rel="stylesheet">
+		<link href="stylesheets/final6.css" rel="stylesheet">
 		<link rel="icon" href="images/favicon(1).ico" type=image/x-icon>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 	</head>
@@ -56,10 +56,10 @@
           include 'footer.php';
 ?>
 			</footer>
-		</section>
     <?php
       include 'include_scripts.php';
-    ?>    
+		?>    
+		</section>		
 	</body>
 </html>
 

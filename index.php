@@ -19,7 +19,7 @@ if(loggedin() || $auth->isLoggedIn()){
 		<meta charset="utf-8">
 		<meta name="desription" content="a website that allows people to play a game.">
 		<title>CoolName Home Page</title>
-		<link href="stylesheets/final5.css" rel="stylesheet">
+		<link href="stylesheets/final6.css" rel="stylesheet">
 		<link rel="icon" href="images/favicon(1).ico" type=image/x-icon>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -34,8 +34,6 @@ if(loggedin() || $auth->isLoggedIn()){
 ?>        
 
 				<h2>Home</h2>
-				<section>
-
 
 <?php if (!loggedin()): ?>
           <a href="game.php"><img src="play_as_guest.png" alt="Play as Guest" height="100px" width="150px"></a><br>
@@ -46,7 +44,6 @@ if(loggedin() || $auth->isLoggedIn()){
           <a href="game.php"><img src="play.png" alt="Play Game" height="100px" width="150px"></a>
 					<h3>Hello, <?= $_SESSION['email'] ?> welcome to CoolName Game.</h3>
 <?php endif;?>
-        </section>
 			</main>
 			<footer>
         <?php
@@ -54,11 +51,11 @@ if(loggedin() || $auth->isLoggedIn()){
           include 'footer.php';  
         ?>
 			</footer>
-		</section>
     
     <?php
 include 'include_scripts.php';
     ?>
+		</section>
 
 	</body>
 </html>

@@ -20,7 +20,7 @@ if(loggedin() || $auth->isLoggedIn()){
 		<meta charset="utf-8">
 		<meta name="desription" content="a website that allows people to play a game.">
 		<title>CoolName Game Page</title>
-		<link href="stylesheets/final5.css" rel="stylesheet">
+		<link href="stylesheets/final6.css" rel="stylesheet">
 		<link rel="icon" href="images/favicon(1).ico" type=image/x-icon>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 	  <script src="js/phaser.min.js"></script>
@@ -47,12 +47,10 @@ if(loggedin() || $auth->isLoggedIn()){
           include 'footer_meta_nav.php';
           include 'footer.php';  
         ?>
-			</footer>
-		</section>
-    
+			</footer>    
     <?php
 include 'include_scripts.php';
     ?>
-
+		</section>
 	</body>
 </html>

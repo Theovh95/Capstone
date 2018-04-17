@@ -16,7 +16,7 @@ if(loggedin()){
 		<meta charset="utf-8">
 		<meta name="desription" content="mattsarg, a website that allows you to post videos to a more local audience">
 		<title>About</title>
-		<link href="stylesheets/final5.css" rel="stylesheet">
+		<link href="stylesheets/final6.css" rel="stylesheet">
 		<link rel="icon" href="images/favicon(1).ico" type=image/x-icon>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 	</head>
@@ -38,21 +38,21 @@ if(loggedin()){
 ?>
 				<h2>What this website aims to do</h2>
 				<section>
-					<ul id="newUL">
-						<li>
-              Text here.
-            </li>
-					</ul>
+					<p class="about_text">
+							Text here.
+					</p>
 				</section>
+				<br>
 				<h2>How to get started</h2>
 				<section>
-					<p>
+					<p class="about_text">
 						Text here.
 					</p>
 				</section>
+				<br>
 				<h2>Who is this for?</h2>
 				<section>
-					<p>
+					<p class="about_text">
 						Text here
 					</p>
 				</section>
@@ -68,9 +68,9 @@ if(loggedin()){
 ?>
 
 			</footer>
-		</section>
     <?php
       include 'include_scripts.php';
-    ?>
+		?>
+		</section>		
   </body>
 </html>
