@@ -195,9 +195,15 @@ p {
 	padding-bottom: 10px;
 }
 
+#game_container {
+}
 
-
-
+#game {
+	border: 15px solid rgb(53, 30, 0);
+	padding: 15px;
+	width: 900px;
+	margin: 0 auto;
+}
 
 /* computer monitor size */
 @media only screen and (min-width: 960px) { 
@@ -313,7 +319,7 @@ p {
   .about_text {
     text-align: center;
   }
-  
+
   #login_toggle_div {
     display: inline;
     top: -54px;
