@@ -14,10 +14,10 @@ class GoogleAuth
  
     if($this->client){
       
-      $this->client->setClientId('5954590334-cm9msujd6aalbq00vivhhniea7pg2u2u.apps.googleusercontent.com');
-      $this->client->setApplicationName('capstone_project');
-      $this->client->setClientSecret('66izq-vo2PF2styhT7_cR7Fd');
-      $this->client->setRedirectUri('http://localhost:9090/Capstone_Project/php_script9.php');
+      $this->client->setClientId('5954590334-0ob33mglm9avah4gnpa2addfn00d128m.apps.googleusercontent.com');
+      $this->client->setApplicationName('Capstone');
+      $this->client->setClientSecret('F4V2i3H9roNI9YSUkDPtUXif');
+      $this->client->setRedirectUri('http://localhost:9090/Capstone/php_script9.php');
       $this->client->setScopes('email');
     }
   }
