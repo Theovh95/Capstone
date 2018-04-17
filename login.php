@@ -17,11 +17,8 @@
   include 'core/init.php';
   include 'core/other_init.php';
   include 'header.php';
-  if(loggedin()) {
-    include 'nav_top.php';
-  } else {
-    include 'nav_top_logged_out.php';
-  }
+  include 'top_meta_nav.php';
+
 ?>   
 
 				<h2>Login</h2>

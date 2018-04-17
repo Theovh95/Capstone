@@ -23,18 +23,9 @@ if(loggedin()){
 	<body>
 		<section id="wrapper">
 			<main>
-
 <?php 
-
         include 'header.php';
-
-
-        if(loggedin()) {
-          include 'nav_top.php';
-        } else {
-          include 'nav_top_logged_out.php';
-        }
-      
+				include 'top_meta_nav.php';
 ?>
 				<h2>What this website aims to do</h2>
 				<section>
@@ -58,15 +49,10 @@ if(loggedin()){
 				</section>
 			</main>
 			<footer>
-
 <?php 
-
           include 'footer_meta_nav.php';
-
-          include 'footer.php';
-          
+          include 'footer.php'; 
 ?>
-
 			</footer>
     <?php
       include 'include_scripts.php';

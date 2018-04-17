@@ -16,11 +16,8 @@
   include 'core/init.php';
   include 'core/other_init.php';
   include 'header.php';
-  if(loggedin()) {
-    include 'nav_top.php';
-  } else {
-    include 'nav_top_logged_out.php';
-  }
+  include 'top_meta_nav.php';
+
 ?>   
 				<h2>Create an account</h2>
 				<section>
@@ -41,18 +38,10 @@
 				</section>
 			</main>
 			<footer>
-				<section class="footerNav">
-
-<?php 
-
-          if (loggedin()) {
-            include 'footer_nav.php';
-          }else {
-            include 'footer_nav_logged_out.php';
-          }
-
-          include 'footer.php';
-?>
+			<?php
+          include 'footer_meta_nav.php';
+          include 'footer.php';  
+        ?>
         </footer>
     <?php
       include 'include_scripts.php';

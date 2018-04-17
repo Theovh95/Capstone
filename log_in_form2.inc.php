@@ -1,5 +1,5 @@
 <?php
-
+// creates an account for the user and sets their email and user_id in sessions.
   include 'core/init.php';
   
   $ip_address = $_SERVER['REMOTE_ADDR'];
@@ -47,7 +47,7 @@
 
                     $_SESSION['user_id'] = $user_id;
                          
-                    $user_name=getuserfield('email');
+                    $_SESSION['email'] = $email;
                     header('Location: index.php'); // sends user to home page after logging in
                     } else {
                         echo 'query did not run';
