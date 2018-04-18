@@ -40,10 +40,14 @@ if(loggedin() || $auth->isLoggedIn()){
           <a href="login.php"><img src="log_in.png" alt="Login" height="100px" width="150px"></a>
 					<h3>Welcome to CoolName Game.</h3>
 
+
 <?php else: ?>
           <a href="game.php"><img src="play.png" alt="Play Game" height="100px" width="150px"></a>
 					<h3>Hello, <?= $_SESSION['email'] ?> welcome to CoolName Game.</h3>
 <?php endif;?>
+
+
+
 			</main>
 			<footer>
         <?php
