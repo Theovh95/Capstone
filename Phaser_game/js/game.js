@@ -1,4 +1,4 @@
-var game = new Phaser.Game(900, 320, Phaser.CANVAS, 'game', { preload: preload, create: create, update: update, render: render });
+var game = new Phaser.Game(800, 320, Phaser.CANVAS, 'game', { preload: preload, create: create, update: update, render: render });
 
 function preload() {
 
@@ -11,23 +11,45 @@ function preload() {
     game.load.image('ground', 'images/ground.png');
 	game.load.image('enemy', 'images/howl.png');
 	game.load.image('end', 'images/Club.png');
+    game.load.image('tiles', 'images/tileset1.png');
+    game.load.tilemap('forest', 'tilemaps/forestmap3.json', null, Phaser.Tilemap.TILED_JSON);
+    
 }
 
 function create() {
+    
 game.physics.startSystem(Phaser.Physics.ARCADE);
 	
 game.physics.arcade.gravity.y = 80;
-  
+
+/*
 ground = game.add.tileSprite(0,317, game.width, 25, 'ground');
 	
 backgroundSet();
-	
-	//end sprite
+*/
+    map = game.add.tilemap('forest');
+
+    map.addTilesetImage('forest', 'tiles');
+    
+    //backgroundLayer = map.createLayer('Background');
+               //groundLayer = map.createLayer('Ground');
+ 
+    layer = map.createLayer('Background');
+     
+    layer.resizeWorld();
+    layer.wrap = true;
+     
+    //map.setCollisionBetween(0, 1, true, layer);
+    
+    
+
+//end sprite
 	
 end = game.add.sprite(870,260, 'end');
 end.anchor.setTo(0.5, 0.5);
 game.physics.enable( end, Phaser.Physics.ARCADE);
-end.body.collideWorldBounds = true;
+
+//end.body.collideWorldBounds = true;
 //hero
 	
 resetHero();
@@ -37,7 +59,7 @@ resetHero();
 spawnDog();
 
 	
-game.input.keyboard.addKeyCapture([ Phaser.Keyboard.LEFT, Phaser.Keyboard.RIGHT, Phaser.keyboard.UP, Phaser.Keyboard.DOWN, Phaser.Keyboard.SPACEBAR ]);
+game.input.keyboard.addKeyCapture([ Phaser.Keyboard.LEFT, Phaser.Keyboard.RIGHT, Phaser.Keyboard.UP, Phaser.Keyboard.DOWN, Phaser.Keyboard.SPACEBAR ]);
 	
 }
 
@@ -85,12 +107,14 @@ function render() {
 
 function resetHero() {
 
-hero = game.add.sprite(0,260, 'hero');
+hero = game.add.sprite(0, 100, 'hero');
 hero.anchor.setTo(0.5, 0.5);
 hero.checkWorldBounds= true;
 game.physics.enable( hero, Phaser.Physics.ARCADE);
 hero.body.collideWorldBounds = true;
 hero.body.bounce.y = 0.5;
+    //game.camera.follow(hero);
+    
    
 }
 function spawnDog(){
