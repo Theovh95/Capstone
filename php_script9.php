@@ -13,16 +13,28 @@ if($auth->checkRedirectCode()){
   
   $payload = $auth->getPayload();
     $query = "SELECT user_id FROM user_tbl WHERE google_id='".$payload['sub']."' AND email='".$payload['email']."'";
-      if ($query_run = mysql_query($query)) {
-       $query_num_rows = mysql_num_rows($query_run);
+      if ($query_run = mysqli_query($db, $query)) {
+       $query_num_rows = mysqli_num_rows($query_run);
        
       if ($query_num_rows==1){
-         $user_id = mysql_result($query_run, 0, 'user_id');
+        while($row = mysqli_fetch_assoc($query_run)){
+          $user_id = $row['user_id'];
+          if(isset($payload['email'])){
+            $email = $payload['email'];
+          } else {
+            $email = $row['email'];
+          }
+        }
+
          $_SESSION['user_id']=$user_id;
-         $_SESSION['username']=$payload['email'];
+         $_SESSION['username']=$email;
          
          header('Location: index.php'); // sends user to home page after logging in
-       }
+       } else {
+        $auth->storeUser($payload);
+      }
+      }else {
+        echo "query did not run";
       }
   
   header('Location: index.php');

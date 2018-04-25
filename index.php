@@ -43,7 +43,8 @@ if(loggedin() || $auth->isLoggedIn()){
 
 <?php else: ?>
           <a href="game.php"><img src="play.png" alt="Play Game" height="100px" width="150px"></a>
-					<h3>Hello, <?= $_SESSION['email'] ?> welcome to CoolName Game.</h3>
+					<h3>Hello, <?= $_SESSION['username'] ?> welcome to CoolName Game.</h3>
+					<img src="<?=$_SESSION['picture'];?>" alt="<?php echo $_SESSION['picture']; ?>">
 <?php endif;?>
 
 

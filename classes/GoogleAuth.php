@@ -3,7 +3,7 @@
 
 class GoogleAuth
 {
-  
+
   protected $db;
   protected $client;
   
@@ -18,12 +18,13 @@ class GoogleAuth
       $this->client->setApplicationName('Capstone');
       $this->client->setClientSecret('F4V2i3H9roNI9YSUkDPtUXif');
       $this->client->setRedirectUri('http://localhost:9090/Capstone/php_script9.php');
-      $this->client->setScopes('email');
+      $this->client->setScopes('profile');
+      $this->client->addScope('email');
+      
     }
   }
   
-  public function isLoggedIn()
-  {
+  public function isLoggedIn(){
     return isset($_SESSION['access_token']);
   }
   
@@ -31,14 +32,17 @@ class GoogleAuth
     return $this->client->createAuthUrl();
   }
   
-  public function checkRedirectCode()
-  {
-
+  public function checkRedirectCode() {
     if(isset($_GET['code'])) {
       $this->client->authenticate($_GET['code']);
             
       $this->setToken($this->client->getAccessToken());
-      
+/*
+      echo "<pre>";
+      die(var_dump($this->getPayload()));
+      echo "</pre>";
+*/
+
       $this->storeUser($this->getPayload());
       
       return true;
@@ -46,108 +50,95 @@ class GoogleAuth
     return false;
   }
   
-  public function setToken($token){
+  public function setToken($token) {
     $_SESSION['access_token'] = $token;
     
     $this->client->setAccessToken($token);
   }
   
-  public function logout()
-  {
+  public function logout() {
     unset($_SESSION['access_token']);
-    
   }
   
-  public function getPayload()
-  {
+  public function getPayload() {
     $payload = $this->client->verifyIdToken();
     
     return $payload;
   }
   
-  protected function storeUser($payload) 
-  {
-  $time = time();
-  date_default_timezone_set('America/Chicago');
-  $actual_time = date('m/d/Y h:i:s a', $time);
+  protected function storeUser($payload) {
+
+    $mysqli = new mysqli('localhost', 'root', '', 'coolname');
+
+    $time = time();
+    date_default_timezone_set('America/Chicago');
+    $actual_time = date('m/d/Y h:i:s a', $time);
+    $google_id = $payload['sub'];
+    $email = $payload['email'];
+    $picture = $payload['picture'];
+
   
     $query2 = "SELECT user_id FROM user_tbl WHERE google_id = '".$payload['sub']."'";
-    if($query_run2 = mysqli_query($query2)){
+    if($query_run2 = mysqli_query($mysqli, $query2)){
       if (mysqli_num_rows($query_run2)>=1){
         
         // this user exists so it should already have a default picture with their user_id
         //get user_id and set it in a session
-        $query5 = "SELECT user_id, username FROM user_tbl WHERE google_id = '".$payload['sub']."'";
-        $query_run5 = mysql_query($query5);
-        $user_id = mysql_result($query_run5, 0, 'user_id');
-        $user_name = mysql_result($query_run5, 0, 'username');
+        $query5 = "SELECT user_id, email, picture FROM user_tbl WHERE google_id = '".$payload['sub']."'";
+        if($query_run5 = mysqli_query($mysqli, $query5)) {
+
+        
+        while($row = mysqli_fetch_assoc($query_run5)){
+          $user_id = $row['user_id'];
+          $user_name = $row['email'];
+          $picture = $row['picture'];
+        }
         $_SESSION['user_id'] = $user_id;
         $_SESSION['username'] = $user_name;
-        
+        $_SESSION['picture'] = $picture;
+      } else {
+        echo "Whoooaaa.....";
+      }
         
       } else {
  
           // use OOP to insert new user but since duplicates are not allowed it will
           // not allow more than one.
           $sql = "
-          INSERT INTO user_tbl (google_id, email, start_date)
-          VALUES ({$payload['sub']}, '{$payload['email']}', '{$actual_time}') 
+          INSERT INTO user_tbl (user_id, email, password, google_id, picture)
+          VALUES ('', '{$payload['email']}', '', {$payload['sub']}, '{$payload['picture']}') 
           ";
-          $this->db->query($sql);
+//          $this->db->query($sql);
+          if(!mysqli_query($mysqli, $sql)){
+            
+            echo "<br><br>hey that was supposed to insert into the database.";
+            die();
+          }
       
 
           //get user_id from previous insert
-          $query5 = "SELECT user_id FROM user_tbl WHERE google_id = '".$payload['sub']."'";
-          $query_run5 = mysql_query($query5);
-          $user_id = mysql_result($query_run5, 0, 'user_id');
+          $query5 = "SELECT * FROM user_tbl WHERE google_id = '".$payload['sub']."'";
+          if(!mysqli_query($mysqli, $query5)) {
+            echo "why in the world did this not run?????";
+            die();
+          }
+
+          $query_run5 = mysqli_query($mysqli, $query5);
+
+          while($row = mysqli_fetch_assoc($query_run5)){
+            $user_id = $row["user_id"];
+            $user_name = $row["email"];
+            $picture = $row["picture"];
+          }
+
           $_SESSION['user_id'] = $user_id;
-              
-              
-          //inserting default picture into user table    
-          $query7 = "SELECT picture_name FROM picture_tbl WHERE picture_id = 1";
-          $query_run7 = mysql_query($query7);
-          if($default_picture_name = mysql_result($query_run7, 0, 'picture_name')){
-
-        }else{
-          echo 'query 7 failed';
-          die(mysql_error());
-
+          $_SESSION['username'] = $user_name;
+          $_SESSION['picture'] = $picture;
         }
-        
-        // get the default picture
-        $query9 = "SELECT picture FROM picture_tbl WHERE picture_id = 1";
-        $query_run9 = mysql_query($query9);
-        if($default_picture = mysql_result($query_run9, 0, 'picture')){
-        $image = $default_picture;
-
-        }else{
-          echo 'query 9 failed';
-          die(mysql_error());
-        }
-
-        // insert default picture into picture table
-        $query8 = "INSERT INTO picture_tbl VALUES ('','$user_id','$default_picture_name','".mysql_escape_string($image)."','')";
-        if($query_run8 = mysql_query($query8)){
-          
-
-        }else{
-          
-          echo 'query 8 failed<br>';
-          echo 'user id is: '.$user_id.'<br><br>';
-          echo "<img src=get.php?id=\"1\" height=75 width=75>";
-          echo 'default picture name is: '.$default_picture_name.'<br><br>';
-          echo 'picture is equal to: '.$default_picture.'<br><br>';
-          
-          die(mysql_error());
-        }
-        
-        
+      } else {
+        echo 'what happened???';
+        die();
       }
-    }
-  
-   
-  }
-  
-  
+    } 
 }
 ?>

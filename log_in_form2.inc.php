@@ -34,7 +34,7 @@
               }else{
                   
                     $google_id = !empty($google_id) ? "'$google_id'" : "NULL";
-                    $query = "INSERT INTO user_tbl VALUES ('','".mysqli_real_escape_string($con, $email)."', '".mysqli_real_escape_string($con, $password)."', $google_id)";
+                    $query = "INSERT INTO user_tbl VALUES ('','".mysqli_real_escape_string($con, $email)."', '".mysqli_real_escape_string($con, $password)."', $google_id, '')";
                     if($query_run = mysqli_query($con, $query)){
                                    
                     //get user id 
