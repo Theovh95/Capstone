@@ -11,7 +11,7 @@
         <span>
           <a href="#" onclick="toggle_login(); return false">
             login
-            <img id="login_carrot" src="images/up_carrot3.png" height="24" width="24">
+            <img id="login_carrot" src="imag/up_carrot3.png" height="24" width="24">
           </a>
         </span>
 
