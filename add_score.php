@@ -33,7 +33,7 @@ if(loggedin() || $auth->isLoggedIn()){
   include 'top_meta_nav.php';
 ?>        
 
-				<h2>Home</h2>
+				<h2>Add Score</h2>
 
 <?php if (!loggedin()): ?>
           <a href="game.php"><img src="play_as_guest.png" alt="Play as Guest" height="100px" width="150px"></a><br>
@@ -41,13 +41,22 @@ if(loggedin() || $auth->isLoggedIn()){
 					<h3>Welcome to CoolName Game.</h3>
 
 
+
 <?php else: ?>
           <a href="game.php"><img src="play.png" alt="Play Game" height="100px" width="150px"></a>
 					<h3>Hello, <?= $_SESSION['username'] ?> welcome to CoolName Game.</h3>
-					<img src="<?=$_SESSION['picture'];?>" alt="<?php echo $_SESSION['picture']; ?>" width="75px" height="75px">
+					<img src="<?=$_SESSION['picture'];?>" alt="<?php echo $_SESSION['picture']; ?>">
+
+          <form action="save_score_script.php" method="post">
+            Score: <input type="text" name="score" required="required">
+            <input type="submit" value="Submit Score">
+          </form>
 
 <?php endif;?>
 
+<?php 
+  output_leaderboard($con, 20);
+?>
 
 
 			</main>

@@ -34,7 +34,7 @@
               }else{
                   
                     $google_id = !empty($google_id) ? "'$google_id'" : "NULL";
-                    $query = "INSERT INTO user_tbl VALUES ('','".mysqli_real_escape_string($con, $email)."', '".mysqli_real_escape_string($con, $password)."', $google_id, '')";
+                    $query = "INSERT INTO user_tbl VALUES ('','".mysqli_real_escape_string($con, $email)."', '".mysqli_real_escape_string($con, $password)."', $google_id, 'http://www.mattsarg.com/images/profile_photo_blank.jpg')";
                     if($query_run = mysqli_query($con, $query)){
                                    
                     //get user id 
@@ -43,11 +43,12 @@
 
                     while($row = mysqli_fetch_assoc($query_run5)){
                       $user_id = $row['user_id'];
+                      $picture = $row['picture'];
                     }
 
                     $_SESSION['user_id'] = $user_id;
-                         
-                    $_SESSION['email'] = $email;
+                    $_SESSION['picture'] = $picture;     
+                    $_SESSION['username'] = $email;
                     header('Location: index.php'); // sends user to home page after logging in
                     } else {
                         echo 'query did not run';

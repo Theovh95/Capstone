@@ -18,17 +18,26 @@ if (isset($_POST['email'])&&isset($_POST['password'])) {
          echo 'Invalid username/password combination.';
        }else if ($query_num_rows==1){
 
-        while($row = mysqli_fetch_assoc($query_run)){
-          $user_id = $row['user_id'];
+        $query2 = "SELECT * FROM user_tbl WHERE email='".mysqli_real_escape_string($con, $email)."' AND password =  '".mysqli_real_escape_string($con, $password_hash)."'";
+        if ($query_run2 = mysqli_query($con, $query2)){
+          while($row = mysqli_fetch_assoc($query_run2)){
+            $user_id = $row['user_id'];
+            $picture = $row['picture'];
+          }
+  
+           $_SESSION['user_id'] = $user_id;
+           $_SESSION['username'] = $_POST['email'];
+           $_SESSION['picture'] = $picture;
+           
+           header('Location: index.php'); // sends user to home page after logging in
+
+        } else {
+          die("problem getting user data from the database");
         }
 
-         $_SESSION['user_id']=$user_id;
-         $_SESSION['email']=$_POST['email'];
-         
-         header('Location: index.php'); // sends user to home page after logging in
        }
       }else {
-        echo 'query did not run';
+        die('query did not run');
         
       }
     

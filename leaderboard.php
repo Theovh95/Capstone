@@ -6,7 +6,6 @@ $ip_address = $_SERVER['REMOTE_ADDR'];
 
 if(loggedin() || $auth->isLoggedIn()){
   $user_id = $_SESSION['user_id'];
-  
 }else{
   $user_id = $ip_address;
 }
@@ -19,12 +18,11 @@ if(loggedin() || $auth->isLoggedIn()){
 	<head>
 		<meta charset="utf-8">
 		<meta name="desription" content="a website that allows people to play a game.">
-		<title>CoolName Game Page</title>
+		<title>Leaderboard</title>
 		<link href="stylesheets/final6.css" rel="stylesheet">
 		<link rel="icon" href="images/favicon(1).ico" type=image/x-icon>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-	  <script src="js/phaser.min.js"></script>
-    <script src="js/game.js"></script>  
+
 	</head>
 	<body>
 		<section id="wrapper">
@@ -35,30 +33,39 @@ if(loggedin() || $auth->isLoggedIn()){
   include 'top_meta_nav.php';
 ?>        
 
-				<h2>Game</h2>
-        <h3>Welcome to CoolName Game.</h3>
-				<section id="game_container">
+				<h2>Leaderboard</h2>
 
-          <div id="game" class='game' width="900px" height="600px"></div>
+<?php if (!loggedin()): ?>
+          <a href="game.php"><img src="play_as_guest.png" alt="Play as Guest" height="100px" width="150px"></a><br>
+          <a href="login.php"><img src="log_in.png" alt="Login" height="100px" width="150px"></a>
+					<h3>Welcome to CoolName Game.</h3>
 
-        </section>
-				<section id="leaderboard">
-					<?php output_leaderboard($con, 10); ?>
-				</section>
-				<section style="display: none;" id="add_score_form">
-            Score: <input id="score_input" type="text" name="score" required="required">
-            <input id="score_submit" type="submit" value="Submit Score" onclick="score_go(<?=(int)$user_id;?>)">
-				</section>
+
+
+<?php else: ?>
+          <a href="game.php"><img src="play.png" alt="Play Game" height="100px" width="150px"></a>
+					<h3>Hello, <?= $_SESSION['username'] ?> welcome to CoolName Game.</h3>
+					<img src="<?=$_SESSION['picture'];?>" alt="<?php echo $_SESSION['picture']; ?>">
+
+<?php endif;?>
+
+<?php 
+  output_leaderboard($con, 100);
+?>
+
+
 			</main>
 			<footer>
         <?php
           include 'footer_meta_nav.php';
           include 'footer.php';  
         ?>
-			</footer>    
+			</footer>
+    
     <?php
 include 'include_scripts.php';
-    ?> 
+    ?>
 		</section>
+
 	</body>
 </html>
