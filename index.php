@@ -30,7 +30,7 @@ if(loggedin() || $auth->isLoggedIn()){
 
 <?php
   include 'header.php';
-  include 'top_meta_nav.php';
+	include 'top_meta_nav.php';
 ?>        
 
 				<h2>Home</h2>
