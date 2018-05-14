@@ -90,11 +90,13 @@ function update() {
 	if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
     {
         player.x -= 2;
+        player.scale.x = -1;
 		
     }
     else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
     {
         player.x += 2;
+        player.scale.x = 1;
     }
 
     if (game.input.keyboard.isDown(Phaser.Keyboard.UP))
@@ -117,13 +119,25 @@ function update() {
 	}
 
 	
+    
 	game.physics.arcade.moveToXY(dog, player.x, 310, 100);
 	game.physics.arcade.moveToXY(bat, player.x, player.y, speed);
 	game.physics.arcade.overlap(player, dog, collisionHandlerDog, null, this);
 	game.physics.arcade.overlap(player, bat, collisionHandlerBat, null, this);
 	game.physics.arcade.overlap(player, life, collisionHandlerLife, null, this);
 	game.physics.arcade.overlap(player, end, collisionHandlerReset, null, this);
-
+    
+    if (dog.body.velocity.x > 0) {
+        dog.scale.x = -1;
+    } else if (dog.body.velocity.x < 0 ) {
+        dog.scale.x = 1;
+    }
+    
+    if (!player.alive && game.input.keyboard.isDown(Phaser.Keyboard.R))
+    {
+        resetup();
+    }
+    
 }
 
 
@@ -181,6 +195,7 @@ function endGame(){
 	dog.kill();
 	bat.kill();
 	player.kill();
+    life.kill();
 	healthText.destroy();
 	gameHealthText.kill();
 	gameScoreText.kill();
@@ -191,6 +206,7 @@ function endGame(){
 		align: "left"
 	});
 	gameOver.fixedToCamera = true;
+
 }
 function spawnPlayer(){
 	player = game.add.sprite(20, 100, 'hero');
@@ -201,7 +217,9 @@ function spawnPlayer(){
 }
 function spawnDog(){
 
-	dog = game.add.sprite(Math.floor(Math.random() * 400), 250, 'enemy');
+    
+	dog = game.add.sprite(player.position.x + randomNumberGeneratorInclusive(game.width/2, game.width) , 250, 'enemy');
+
 	dog.anchor.setTo(0.5, 0.9);
 	dog.scale.setTo(0.9,0.9);
 	game.physics.enable( dog, Phaser.Physics.ARCADE);
@@ -280,7 +298,7 @@ function collisionHandlerBat(player, bat){
 			spawnBat();
 			healthText.destroy();
 			healthTrack();
-			//alert(player.x);
+
 			
 		}else{
 			endGame();
@@ -299,10 +317,24 @@ function collisionHandlerReset(player, end){
 
 }
 function resetup(){
+
 	spawnPlayer();
+
+    scoreTrack();
+    spawnPlayer();
+
 	spawnLife();
     spawnDog();
 	spawnBat();
     spawnEnd();
+    gameOver.kill();
+    health = 3;
+    score = 0;
 	
+}
+
+function randomNumberGeneratorInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min +1)) + min;
 }
