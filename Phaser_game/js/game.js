@@ -280,7 +280,7 @@ function collisionHandlerBat(player, bat){
 			spawnBat();
 			healthText.destroy();
 			healthTrack();
-			alert(player.x);
+			//alert(player.x);
 			
 		}else{
 			endGame();
