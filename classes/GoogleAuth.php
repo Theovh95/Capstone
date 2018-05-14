@@ -16,7 +16,7 @@ class GoogleAuth
       
       $this->client->setClientId('5954590334-hegl0ej2i3f31dmtfeflut1940hbauko.apps.googleusercontent.com');
       $this->client->setApplicationName('Capstone');
-      $this->client->setClientSecret('VXMF211nIrIwK88AmGtJgduZ');
+      $this->client->setClientSecret('tkzRK6jRrYkuRRx9ia8VClJm');
       $this->client->setRedirectUri('http://localhost:9090/Capstone/php_script9.php');
       $this->client->setScopes('profile');
       $this->client->addScope('email');

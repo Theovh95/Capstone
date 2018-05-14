@@ -1,4 +1,4 @@
-var game = new Phaser.Game(900, 320, Phaser.CANVAS, 'game', { preload: preload, create: create, update: update, render: render });
+var game = new Phaser.Game(800, 320, Phaser.CANVAS, 'game', { preload: preload, create: create, update: update, render: render });
 
 function preload() {
 
@@ -10,94 +10,154 @@ function preload() {
 	game.load.image('punch', 'images/punch.png');
     game.load.image('ground', 'images/ground.png');
 	game.load.image('enemy', 'images/howl.png');
+	game.load.image('bat', 'images/Thebat.png');
+	game.load.image('life', 'images/heart.png');
 	game.load.image('end', 'images/Club.png');
-	game.load.image('platform', 'images/groundtiles.png');
-	
+    game.load.image('tiles', 'images/tileset1.png');
+    game.load.tilemap('forest', 'tilemaps/forestmap3.json', null, Phaser.Tilemap.TILED_JSON);
+    
 }
-	score = 0;
-	health = 3;
 
+var map;
+var layer;
+var player;
+var health = 3;
+var score = 0;
+var randomY = Math.floor(Math.random() * 12);
+var speed = 170;
+
+var width = game.width;
 
 function create() {
-
-	
-	
-	
+    
 game.physics.startSystem(Phaser.Physics.ARCADE);
 	
-game.physics.arcade.gravity.y = 55;
-  
-ground = game.add.tileSprite(0,317, game.width, 25, 'ground');
+game.physics.arcade.gravity.y = 100;
+
+
+	backgroundSet();
 	
-backgroundSet();
+    map = game.add.tilemap('forest', 32, 32);
+
+    map.addTilesetImage('forest', 'tiles');
+    
+    //backgroundLayer = map.createLayer('Background');
+    //groundLayer = map.createLayer('Ground');
+    map.setCollisionBetween(1, 2);
+    
+    layer = map.createLayer('Background');
+     
+    layer.resizeWorld();
+    layer.wrap = true;
 	
-	//end sprite
+    
+    
+
+    //end sprite
 	
-end = game.add.sprite(870,260, 'end');
-end.anchor.setTo(0.5, 0.5);
-game.physics.enable( end, Phaser.Physics.ARCADE);
-end.body.collideWorldBounds = true;
+//    end = game.add.sprite(870,260, 'end');
+//    end.anchor.setTo(0.5, 0.5);
+//    game.physics.enable( end, Phaser.Physics.ARCADE);
+	spawnPlayer();
+	spawnLife();
+    spawnDog();
+	spawnBat();
+    spawnEnd();
+//end.body.collideWorldBounds = true;
 //hero
 	
-resetHero();
+//resetHero();
 //dog
+	healthTrack();
+	scoreTrack();
 	
-	
-spawnDog();
 
-spawnGround();
 
-scoreTrack();
 	
-healthTrack();
-	
-	
-game.input.keyboard.addKeyCapture([ Phaser.Keyboard.LEFT, Phaser.Keyboard.RIGHT, Phaser.keyboard.UP, Phaser.Keyboard.DOWN, Phaser.Keyboard.SPACEBAR ]);
+game.input.keyboard.addKeyCapture([ Phaser.Keyboard.LEFT, Phaser.Keyboard.RIGHT, Phaser.Keyboard.UP, Phaser.Keyboard.DOWN, Phaser.Keyboard.SPACEBAR ]);
 	
 }
 
 function update() {
+	//alert(speed);
 
+    game.physics.arcade.collide(player, layer);
+    game.physics.arcade.collide(dog, layer);
+	game.physics.arcade.collide(life, layer);
+	game.physics.arcade.collide(end, layer);
+    //player.body.velocity.set(0);
 	
 	if (game.input.keyboard.isDown(Phaser.Keyboard.LEFT))
     {
-        hero.x -= 2;
+        player.x -= 2;
+        player.scale.x = -1;
 		
     }
     else if (game.input.keyboard.isDown(Phaser.Keyboard.RIGHT))
     {
-        hero.x += 2;
+        player.x += 2;
+        player.scale.x = 1;
     }
 
     if (game.input.keyboard.isDown(Phaser.Keyboard.UP))
     {
-        hero.y -= 1.2;
+        player.y -= 1.5;
     }
     else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN))
     {
-        hero.y += 4;
+        player.y += 1.5;
     }
 	
 	if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR))
     {
 		
-       hero.loadTexture('punch',0);
+       player.loadTexture('punch',0);
 		
     }else{
 		
-		hero.loadTexture('hero',0);
+		player.loadTexture('hero',0);
 	}
 
 	
-	game.physics.arcade.moveToXY(dog, -40, 310, 100);
-	game.physics.arcade.overlap(hero, dog, collisionHandler, null, this);
-	game.physics.arcade.overlap(hero, end, collisionHandlerEnd, null, this);
-
+    
+	game.physics.arcade.moveToXY(dog, player.x, 310, 100);
+	game.physics.arcade.moveToXY(bat, player.x, player.y, speed);
+	game.physics.arcade.overlap(player, dog, collisionHandlerDog, null, this);
+	game.physics.arcade.overlap(player, bat, collisionHandlerBat, null, this);
+	game.physics.arcade.overlap(player, life, collisionHandlerLife, null, this);
+	game.physics.arcade.overlap(player, end, collisionHandlerReset, null, this);
+    
+    if (dog.body.velocity.x > 0) {
+        dog.scale.x = -1;
+    } else if (dog.body.velocity.x < 0 ) {
+        dog.scale.x = 1;
+    }
+    
+    if (!player.alive && game.input.keyboard.isDown(Phaser.Keyboard.R))
+    {
+        resetup();
+    }
+    
 }
 
 
 function render() {
+	
 }
+/*
+function resetHero() {
+
+hero = game.add.sprite(0, 100, 'hero');
+hero.anchor.setTo(0.5, 0.5);
+hero.checkWorldBounds= true;
+game.physics.enable( hero, Phaser.Physics.ARCADE);
+hero.body.collideWorldBounds = true;
+hero.body.bounce.y = 0.5;
+    //game.camera.follow(hero);
+    
+   
+}
+*/
 function scoreTrack(){
     gameScoreText = game.add.text(300, 10, 'score:', {
 		font: "28px Gabriella",
@@ -110,6 +170,8 @@ function scoreTrack(){
 		fill: "#FFFFFF",
 		align: "center"
 	});
+	gameScoreText.fixedToCamera = true;
+	scoreText.fixedToCamera = true;
 }
 
 function healthTrack(){
@@ -125,54 +187,86 @@ function healthTrack(){
 		fill: "#FFFFFF",
 		align: "center"
 	});
+	
+	gameHealthText.fixedToCamera = true;
+	healthText.fixedToCamera = true;
 }
-function spawnGround(){
-platform = game.add.tileSprite(Math.floor(Math.random()*400),250, game.width /Math.floor(Math.random()*4), 25, 'platform');
+function endGame(){
+	dog.kill();
+	bat.kill();
+	player.kill();
+    life.kill();
+	healthText.destroy();
+	gameHealthText.kill();
+	gameScoreText.kill();
+	scoreText.destroy();
+	gameOver = game.add.text(400, 150, 'GAME OVER: SCORE = ' + score, {
+		font: "28px Gabriella",
+		fill: "red",
+		align: "left"
+	});
+	gameOver.fixedToCamera = true;
 
 }
-function resetHero() {
-
-hero = game.add.sprite(0,260, 'hero');
-hero.anchor.setTo(0.5, 0.5);
-hero.checkWorldBounds= true;
-game.physics.enable( hero, Phaser.Physics.ARCADE);
-hero.body.collideWorldBounds = true;
-//hero.body.bounce.y = 0.5;
-   
+function spawnPlayer(){
+	player = game.add.sprite(20, 100, 'hero');
+    player.anchor.set(0.5, 0.5);
+    game.physics.enable(player, Phaser.Physics.ARCADE);
+    
+    game.camera.follow(player);
 }
 function spawnDog(){
-dog = game.add.sprite(950,310, 'enemy');
-dog.anchor.setTo(0.5, 0.9);
-dog.scale.setTo(0.7,0.7);
-game.physics.enable( dog, Phaser.Physics.ARCADE);
+
+    
+	dog = game.add.sprite(player.position.x + randomNumberGeneratorInclusive(game.width/2, game.width) , 250, 'enemy');
+
+	dog.anchor.setTo(0.5, 0.9);
+	dog.scale.setTo(0.9,0.9);
+	game.physics.enable( dog, Phaser.Physics.ARCADE);
 
 }
+function spawnLife(){
+
+	life = game.add.sprite(Math.floor(Math.random() * width) , 250, 'life');
+	life.anchor.setTo(0.5, 0.9);
+	life.scale.setTo(0.9,0.9);
+	game.physics.enable( life, Phaser.Physics.ARCADE);
+
+}
+function spawnBat(){
+	spawn = Math.floor(Math.random() * 400);
+	bat = game.add.sprite(Math.floor(Math.random() * 400) , 20, 'bat');
+	bat.anchor.setTo(0.5, 0.9);
+	bat.scale.setTo(0.9,0.9);
+	game.physics.enable( bat, Phaser.Physics.ARCADE);
+
+}
+function spawnEnd(){
+	end = game.add.sprite(1600 , 20, 'end');
+	game.physics.enable( end, Phaser.Physics.ARCADE);
+}
 function backgroundSet(){
-	
 	
 random = Math.floor(Math.random() * 3);
 
 	
-background = game.add.tileSprite(0, 0, game.width, game.height, 'background' + random);
+background = game.add.tileSprite(0, 0, 800, 320, 'background' + random);
 background.scale.setTo(1,2);
+
 	
 }
-function collisionHandler(hero, dog){
-		
+function collisionHandlerDog(player, dog){
 	
-		if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
-			
-		score ++;
+		if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR))
+    {
+		
+   		score ++;
         dog.kill();
 		spawnDog();
 		
 		scoreText.destroy();
 		scoreTrack();
-			
-		
-		
     }else{
-		
 		if(health >= 1){
 			health--;
 			dog.kill();
@@ -181,34 +275,72 @@ function collisionHandler(hero, dog){
 			healthTrack();
 			
 		}else{
-			hero.kill();
-			scoreDiv = document.getElementById('score_input');
-			scoreDiv.value = score;
-			scoreButton = document.getElementById('score_submit');
-			scoreButton.click();
+      save_score();
+			endGame();
 		}
+	}	
+}
+function collisionHandlerBat(player, bat){
+	
+	
+		if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR))
+    {
+		
+   		score ++;
+        bat.kill();
+		spawnBat();
+		
+		scoreText.destroy();
+		scoreTrack();
+    }else{
+		if(health >= 1){
+			health--;
+			bat.kill();
+			spawnBat();
+			healthText.destroy();
+			healthTrack();
 
 			
-	}
+		}else{
 
-	
+      save_score();      
+			endGame();
+		}
+	}	
 }
-function collisionHandlerEnd(hero, end){
-	//reseting hero to begining of canvas
-	hero.kill();
-	
-	resetHero();
-	
-	//reseting back ground
-	backgroundSet();
-	background.kill();
-	
-	//reseting score
-	scoreText.destroy();
-	scoreTrack();
+function collisionHandlerLife(player, life){
+	life.kill();
+	health++;
 	healthText.destroy();
 	healthTrack();
-	//respawn ground and dow
-	spawnGround();
-	spawnDog();
+
+}
+function collisionHandlerReset(player, end){
+	resetup();
+
+}
+function resetup(){
+
+    scoreTrack();
+    spawnPlayer();
+
+	spawnLife();
+    spawnDog();
+	spawnBat();
+    spawnEnd();
+    gameOver.kill();
+    health = 3;
+    score = 0;
+	
+}
+
+function randomNumberGeneratorInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min +1)) + min;
+}
+
+function save_score() {
+  var score_box = document.getElementById("score_input").value = score;
+  var button = document.getElementById("score_submit").click();
 }
