@@ -191,7 +191,6 @@ function endGame(){
 		align: "left"
 	});
 	gameOver.fixedToCamera = true;
-	//game.kill();
 }
 function spawnPlayer(){
 	player = game.add.sprite(20, 100, 'hero');
@@ -202,7 +201,7 @@ function spawnPlayer(){
 }
 function spawnDog(){
 
-	dog = game.add.sprite(Math.floor(Math.random() * width) , 250, 'enemy');
+	dog = game.add.sprite(Math.floor(Math.random() * 400), 250, 'enemy');
 	dog.anchor.setTo(0.5, 0.9);
 	dog.scale.setTo(0.9,0.9);
 	game.physics.enable( dog, Phaser.Physics.ARCADE);
@@ -238,7 +237,7 @@ background.scale.setTo(1,2);
 
 	
 }
-function collisionHandlerDog(hero, dog){
+function collisionHandlerDog(player, dog){
 	
 		if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR))
     {
@@ -262,7 +261,7 @@ function collisionHandlerDog(hero, dog){
 		}
 	}	
 }
-function collisionHandlerBat(hero, bat){
+function collisionHandlerBat(player, bat){
 	
 	
 		if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR))
@@ -288,19 +287,19 @@ function collisionHandlerBat(hero, bat){
 		}
 	}	
 }
-function collisionHandlerLife(hero, life){
+function collisionHandlerLife(player, life){
 	life.kill();
 	health++;
 	healthText.destroy();
 	healthTrack();
 
 }
-function collisionHandlerReset(hero, end){
+function collisionHandlerReset(player, end){
 	resetup();
 
 }
 function resetup(){
-		spawnPlayer();
+	spawnPlayer();
 	spawnLife();
     spawnDog();
 	spawnBat();
