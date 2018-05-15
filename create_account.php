@@ -34,7 +34,7 @@
 					</form>
 				</fieldset>
           <p>Already have an account?</p>
-					<h3><a href = "login.php">Login</a></h3>
+					<h3><a href = "login.php"><img src="images/login2.png" width="150px" height="75px"></a></h3>
 				</section>
 			</main>
 			<footer>

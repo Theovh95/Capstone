@@ -3,7 +3,7 @@
     <header>
       <h1>
       
-        <img src="" alt="CoolName" width="644" height="176">
+        <img src="images/logo3.png" alt="CoolName" width="644" height="176">
       
       </h1>
 

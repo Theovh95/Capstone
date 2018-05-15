@@ -18,7 +18,7 @@ if(loggedin() || $auth->isLoggedIn()){
 	<head>
 		<meta charset="utf-8">
 		<meta name="desription" content="a website that allows people to play a game.">
-		<title>CoolName Home Page</title>
+		<title>Escape From Extinction Home Page</title>
 		<link href="stylesheets/final6.css" rel="stylesheet">
 		<link rel="icon" href="images/favicon(1).ico" type=image/x-icon>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -36,14 +36,14 @@ if(loggedin() || $auth->isLoggedIn()){
 				<h2>Home</h2>
 
 <?php if (!loggedin()): ?>
-          <a href="game.php"><img src="play_as_guest.png" alt="Play as Guest" height="100px" width="150px"></a><br>
-          <a href="login.php"><img src="log_in.png" alt="Login" height="100px" width="150px"></a>
-					<h3>Welcome to CoolName Game.</h3>
+          <a href="game.php"><img src="images/play_as_guest2.png" alt="Play as Guest" height="75px" width="150px"></a><br>
+          <a href="login.php"><img src="images/login2.png" alt="Login" height="75px" width="150px"></a>
+					<h3>Welcome to Escape From Extinction.</h3>
 
 
 <?php else: ?>
-          <a href="game.php"><img src="play.png" alt="Play Game" height="100px" width="150px"></a>
-					<h3>Hello, <?= $_SESSION['username'] ?> welcome to CoolName Game.</h3>
+          <a href="game.php"><img src="images/play2.png" alt="Play Game" height="75px" width="150px"></a>
+					<h3>Hello, <?= $_SESSION['username'] ?> welcome to Escape From Extinction.</h3>
 					<img src="<?=$_SESSION['picture'];?>" alt="<?php echo $_SESSION['picture']; ?>" width="75px" height="75px">
 
 <?php endif;?>

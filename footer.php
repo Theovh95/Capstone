@@ -1,7 +1,7 @@
 <?php
 
 
-echo '<div class="copyright"><small class="experiment">Copyright &copy; '. date("Y") . ' coolgame</small></div>';
+echo '<div class="copyright"><small class="experiment">Copyright &copy; '. date("Y") . ' Escape From Extinction</small></div>';
 
 
 
