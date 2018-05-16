@@ -135,7 +135,7 @@ function update() {
     
     if (!player.alive && game.input.keyboard.isDown(Phaser.Keyboard.R))
     {
-        resetup();
+        reset();
     }
     
 }
@@ -318,21 +318,30 @@ function collisionHandlerReset(player, end){
 }
 function resetup(){
 
-	spawnPlayer();
-
-    scoreTrack();
+    //scoreTrack();
     spawnPlayer();
 
 	spawnLife();
     spawnDog();
 	spawnBat();
     spawnEnd();
+	
+
+}
+function reset(){
+	
+	 scoreTrack();
+    spawnPlayer();
+
+	spawnLife();
+    spawnDog();
+	spawnBat();
+    spawnEnd();
+	scoreText.kill();
     gameOver.kill();
     health = 3;
     score = 0;
-	
 }
-
 function randomNumberGeneratorInclusive(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
