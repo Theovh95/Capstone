@@ -14,7 +14,7 @@ function preload() {
 	game.load.image('life', 'images/heart.png');
 	game.load.image('end', 'images/Club.png');
     game.load.image('tiles', 'images/tileset1.png');
-    game.load.tilemap('forest', 'tilemaps/forestmap3.json', null, Phaser.Tilemap.TILED_JSON);
+    game.load.tilemap('forest', 'tilemaps/forestmap4.json', null, Phaser.Tilemap.TILED_JSON);
     
 }
 
@@ -159,13 +159,13 @@ hero.body.bounce.y = 0.5;
 }
 */
 function scoreTrack(){
-    gameScoreText = game.add.text(300, 10, 'score:', {
+    gameScoreText = game.add.text(300, 10, 'Score:', {
 		font: "28px Gabriella",
 		fill: "#FFFFFF",
 		align: "left"
 	});
 	
-	scoreText = game.add.text(365, 10 , score, {
+	scoreText = game.add.text(380, 10 , score, {
 		font: "28px Gabriella",
 		fill: "#FFFFFF",
 		align: "center"
@@ -182,7 +182,7 @@ function healthTrack(){
 		align: "left"
 	});
 	  
-		healthText = game.add.text(250, 10 , health, {
+		healthText = game.add.text(240, 10 , health, {
 		font: "28px Gabriella",
 		fill: "#FFFFFF",
 		align: "center"
@@ -196,7 +196,7 @@ function endGame(){
 	bat.kill();
 	player.kill();
     life.kill();
-	healthText.destroy();
+	healthText.kill();
 	gameHealthText.kill();
 	gameScoreText.kill();
 	scoreText.destroy();
@@ -242,7 +242,7 @@ function spawnBat(){
 
 }
 function spawnEnd(){
-	end = game.add.sprite(1600 , 20, 'end');
+	end = game.add.sprite(2500 , 20, 'end');
 	game.physics.enable( end, Phaser.Physics.ARCADE);
 }
 function backgroundSet(){
@@ -313,16 +313,14 @@ function collisionHandlerLife(player, life){
 
 }
 function collisionHandlerReset(player, end){
-	resetup();
+	reset();
 
 }
 function resetup(){
 
-	spawnPlayer();
-
     scoreTrack();
     spawnPlayer();
-
+    healthTrack();
 	spawnLife();
     spawnDog();
 	spawnBat();
@@ -331,6 +329,15 @@ function resetup(){
     health = 3;
     score = 0;
 	
+}
+
+function reset() {
+    spawnPlayer();
+    spawnLife();
+    spawnDog();
+	spawnBat();
+    spawnEnd();
+    
 }
 
 function randomNumberGeneratorInclusive(min, max) {
