@@ -36,10 +36,10 @@ if(loggedin() || $auth->isLoggedIn()){
 ?>        
 
 				<h2>Game</h2>
-        <h3>Welcome to CoolName Game.</h3>
+        <h3>Welcome to Escape From Extinction Game.</h3>
 				<section id="game_container">
 
-          <div id="game" class='game' width="900px" height="600px"></div>
+          <div id="game" class='game' width="800px" height="600px"></div>
 
         </section>
 				<section id="leaderboard">
