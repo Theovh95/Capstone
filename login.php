@@ -42,7 +42,7 @@
 
 				</fieldset><br><br>
 					<p>Don't already have an account?</p>
-          <h3><a href ="create_account.php"><img src="images/create_account2.png" width="250px" height="75px"></a></h3>
+          <h3><a href ="create_account.php"><img src="images/createaccount.png" width="200px" height="33px"></a></h3>
 				</section>
 			</main>
 			<footer>

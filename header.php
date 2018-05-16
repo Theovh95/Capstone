@@ -3,7 +3,7 @@
     <header>
       <h1>
       
-        <img src="images/logo3.png" alt="CoolName" width="644" height="176">
+        <img src="images/Title.png" alt="CoolName" width="644" height="176">
       
       </h1>
 
@@ -19,13 +19,13 @@
       ';
       if($auth->isLoggedIn() || loggedin()): 
       echo '
-          <a href="log_out.php">Sign out</a>
+          <a href="log_out.php"><img src="images/signout.png" height="33px" width="180px"></a>
           ';
         else: 
         echo '
           <a href="'.$auth->getAuthUrl().'"><img src="images/google_signin.png"></a><hr>
-          <a href = "login.php">Login<a><hr>
-          <a href = "create_account.php">Create&nbsp;Account</a>
+          <a href = "login.php"><img src="images/login.png" width="180px" height="33px"></a><hr>
+          <a href = "create_account.php"><img src="images/createaccount.png" width="180px" height="33px"></a>
         ';
         endif; 
         echo '     

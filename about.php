@@ -30,21 +30,21 @@ if(loggedin()){
 				<h2>What this website aims to do</h2>
 				<section>
 					<p class="about_text">
-							Text here.
+							This website aims to give anybody who has some time to waste to waste it playing our game.
 					</p>
 				</section>
 				<br>
 				<h2>How to get started</h2>
 				<section>
 					<p class="about_text">
-						Text here.
+				    Simply login with your google account or make an account with the website or even just play as a guest.
 					</p>
 				</section>
 				<br>
 				<h2>Who is this for?</h2>
 				<section>
 					<p class="about_text">
-						Text here
+						For anyone who has some time to spend playing a game.
 					</p>
 				</section>
 			</main>

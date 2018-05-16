@@ -36,13 +36,13 @@ if(loggedin() || $auth->isLoggedIn()){
 				<h2>Home</h2>
 
 <?php if (!loggedin()): ?>
-          <a href="game.php"><img src="images/play_as_guest2.png" alt="Play as Guest" height="75px" width="150px"></a><br>
-          <a href="login.php"><img src="images/login2.png" alt="Login" height="75px" width="150px"></a>
+          <a href="game.php"><img src="images/play.png" alt="Play as Guest" height="33px" width="200px"></a><br>
+          <a href="login.php"><img src="images/login.png" alt="Login" height="33px" width="200px"></a>
 					<h3>Welcome to Escape From Extinction.</h3>
 
 
 <?php else: ?>
-          <a href="game.php"><img src="images/play2.png" alt="Play Game" height="75px" width="150px"></a>
+          <a href="game.php"><img src="images/play.png" alt="Play Game" height="33px" width="200px"></a>
 					<h3>Hello, <?= $_SESSION['username'] ?> welcome to Escape From Extinction.</h3>
 					<img src="<?=$_SESSION['picture'];?>" alt="<?php echo $_SESSION['picture']; ?>" width="75px" height="75px">
 
