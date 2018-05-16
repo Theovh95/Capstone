@@ -25,6 +25,7 @@ var health = 3;
 var score = 0;
 var randomY = Math.floor(Math.random() * 12);
 var speed = 170;
+var jumpTimer;
 
 var width = game.width;
 
@@ -49,9 +50,6 @@ game.physics.arcade.gravity.y = 100;
      
     layer.resizeWorld();
     layer.wrap = true;
-	
-    
-    
 
     //end sprite
 	
@@ -99,13 +97,13 @@ function update() {
         player.scale.x = 1;
     }
 
-    if (game.input.keyboard.isDown(Phaser.Keyboard.UP))
+    if (game.input.keyboard.isDown(Phaser.Keyboard.UP) && player.body.blocked.down)
     {
-        player.y -= 1.5;
+        player.body.velocity.y -= 120;
     }
-    else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN))
+    else if (game.input.keyboard.isDown(Phaser.Keyboard.DOWN) && player.body.touching.down)
     {
-        player.y += 1.5;
+        
     }
 	
 	if (game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR))
@@ -211,8 +209,9 @@ function endGame(){
 function spawnPlayer(){
 	player = game.add.sprite(20, 100, 'hero');
     player.anchor.set(0.5, 0.5);
-    game.physics.enable(player, Phaser.Physics.ARCADE);
     
+    game.physics.enable(player, Phaser.Physics.ARCADE);
+    player.body.collideWorldBounds = true;
     game.camera.follow(player);
 }
 function spawnDog(){
@@ -267,7 +266,7 @@ function collisionHandlerDog(player, dog){
 		scoreText.destroy();
 		scoreTrack();
     }else{
-		if(health >= 1){
+		if(health > 1){
 			health--;
 			dog.kill();
 			spawnDog();
@@ -292,7 +291,7 @@ function collisionHandlerBat(player, bat){
 		scoreText.destroy();
 		scoreTrack();
     }else{
-		if(health >= 1){
+		if(health > 1){
 			health--;
 			bat.kill();
 			spawnBat();
