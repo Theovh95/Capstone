@@ -31,9 +31,9 @@ var width = game.width;
 
 function create() {
     
-game.physics.startSystem(Phaser.Physics.ARCADE);
+    game.physics.startSystem(Phaser.Physics.ARCADE);
 	
-game.physics.arcade.gravity.y = 100;
+    game.physics.arcade.gravity.y = 100;
 
 	backgroundSet();
 	
@@ -60,7 +60,7 @@ game.physics.arcade.gravity.y = 100;
 }
 
 function update() {
-
+    
     game.physics.arcade.collide(player, layer);
     game.physics.arcade.collide(dog, layer);
 	game.physics.arcade.collide(life, layer);
@@ -227,10 +227,8 @@ function spawnEnd() {
 }
 
 function backgroundSet() {
-	
-    random = Math.floor(Math.random() * 3);
 
-    background = game.add.tileSprite(0, 0, 800, 320, 'background' + random);
+    background = game.add.tileSprite(0, 0, 2750, 320, 'background2');
     background.scale.setTo(1,2);
 
 }
