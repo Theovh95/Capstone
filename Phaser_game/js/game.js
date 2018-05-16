@@ -110,7 +110,7 @@ function update() {
     
     if (!player.alive && game.input.keyboard.isDown(Phaser.Keyboard.R)) {
         
-        reset();
+        resetup();
     }
     
 }
@@ -311,25 +311,29 @@ function collisionHandlerReset(player, end) {
 function resetup() {
 
     spawnPlayer();
-    healthTrack();
 	spawnLife();
     spawnDog();
 	spawnBat();
     spawnEnd();
+    healthText.kill();
 	scoreText.kill();
-    gameOver.kill();
     health = 3;
     score = 0;
+    healthTrack();
+    scoreTrack();
+    gameOver.kill();
     
 }
 
 function reset() {
+    
     
     spawnPlayer();
     spawnLife();
     spawnDog();
 	spawnBat();
     spawnEnd();
+    
     
 }
 
